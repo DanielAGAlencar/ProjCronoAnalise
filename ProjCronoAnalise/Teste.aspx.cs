@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using MySql.Data.MySqlClient;
 using System.Data;
 using System.Text;
+using System.Windows;
 
 
 namespace ProjCronoAnalise
@@ -19,6 +20,17 @@ namespace ProjCronoAnalise
         protected void Page_Load(object sender, EventArgs e)
         {
             LoadTable();
+            MySqlConnection connop = new MySqlConnection(MyConString);
+            connop.Open();
+            MySqlCommand cmdop = new MySqlCommand(" select descricao from producaooperacao ", connop);
+            MySqlDataReader drop = cmdop.ExecuteReader();
+            DataTable dtop = new DataTable();
+            dtop.Load(drop);
+            DropDownList1.DataSource = dtop;
+            DropDownList1.DataTextField = "descricao";
+            DropDownList1.DataValueField = "descricao";
+            DropDownList1.DataBind();
+            connop.Close();
         }
 
 

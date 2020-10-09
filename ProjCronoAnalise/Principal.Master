@@ -1,6 +1,31 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Principal.master.cs" Inherits="ProjCronoAnalise.Principal" %>
 
 <!DOCTYPE html>
+<script type="text/javascript">
+    function MostrarModalAcao() {
+        $("#modalTempoPadraoEscolhaAcao").modal('show');
+    }
+</script>
+<script type="text/javascript">
+    function MostrarModalCadastrar() {
+        $("#modalTempoPadraoCadastrar").modal('show');
+    }
+</script>
+<script type="text/javascript">
+    function MostrarModalAlterarDeletar() {
+        $("#modalTempoPadraoAlterarDeletar").modal('show');
+    }
+</script>
+<script type="text/javascript">
+    function MostrarModalMsg() {
+        $("#modalMsg").modal('show');
+    }
+</script>
+<script type="text/javascript">
+    function MostrarModalIniciarProducao() {
+        $("#modalIniciarProducao").modal('show');
+    }
+</script>
 
 <html>
 <head runat="server">

@@ -79,7 +79,6 @@ C:\Users\DANIEL2-GVM\source\repos\ProjCronoAnalise\ProjCronoAnalise\bin\System.N
 C:\Users\DANIEL2-GVM\source\repos\ProjCronoAnalise\ProjCronoAnalise\bin\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\DANIEL2-GVM\source\repos\ProjCronoAnalise\ProjCronoAnalise\bin\System.Threading.Tasks.Extensions.xml
 C:\Users\DANIEL2-GVM\source\repos\ProjCronoAnalise\ProjCronoAnalise\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\DANIEL2-GVM\source\repos\ProjCronoAnalise\ProjCronoAnalise\obj\Debug\ProjCronoAnalise.csprojAssemblyReference.cache
 C:\Users\DANIEL2-GVM\source\repos\ProjCronoAnalise\ProjCronoAnalise\obj\Debug\ProjCronoAnalise.csproj.CoreCompileInputs.cache
 C:\Users\DANIEL2-GVM\source\repos\ProjCronoAnalise\ProjCronoAnalise\obj\Debug\ProjCronoAnalise.csproj.CopyComplete
 C:\Users\DANIEL2-GVM\source\repos\ProjCronoAnalise\ProjCronoAnalise\obj\Debug\ProjCronoAnalise.dll
