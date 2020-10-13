@@ -26,6 +26,26 @@
         $("#modalIniciarProducao").modal('show');
     }
 </script>
+<script type="text/javascript">
+    function MostrarModalPausarFinalizarCancelarProducao() {
+        $("#modalPausarFinalizarCancelarProducao").modal('show');
+    }
+</script>
+<script type="text/javascript">
+    function MostrarModalFinalizarIniciarCancelarProducao() {
+        $("#modalFinalizarIniciarCancelarProducao").modal('show');
+    }
+</script>
+<script type="text/javascript">
+    function MostrarModalCancelarProducao() {
+        $("#modalCancelarProducao").modal('show');
+    }
+</script>
+<script type="text/javascript">
+    function MostrarModalMsgDefault() {
+        $("#modalMsgDefault").modal('show');
+    }
+</script>
 
 <html>
 <head runat="server">
@@ -48,7 +68,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="Default.aspx">Controle de Pedidos</a>
+                <a class="navbar-brand" href="Default.aspx">Cronoanálise</a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">

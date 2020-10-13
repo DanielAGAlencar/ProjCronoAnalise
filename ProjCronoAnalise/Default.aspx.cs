@@ -8,6 +8,7 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using MySql.Data.Types;
 using System.Globalization;
+using Org.BouncyCastle.Bcpg;
 
 namespace ProjCronoAnalise
 {
@@ -42,6 +43,7 @@ namespace ProjCronoAnalise
                                                 " DATE_FORMAT(ft.data_criacao, '%d-%m-%y às %H:%i:%s') as criacao, " +
                                                 " DATE_FORMAT(ft.stop_tempo, '%d-%m-%y às %H:%i:%s') as fim, " +
                                                 " ft.quantidade as quantidade, " +
+                                                " ft.obs as observacao, " +
                                                 " ft.situacao as situacao " +
                                                 " from fichatempo ft " +
                                                 " inner join fichaproducao fp on fp.recnum = ft.fkficha " +
@@ -63,6 +65,58 @@ namespace ProjCronoAnalise
             // Envia a lista de itens para a grid GDVFichaTempo
             GDVFichaTempo.DataSource = dataTable;
             GDVFichaTempo.DataBind();
+
+        }
+
+        protected void GDVFichaTempo_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+
+            if (e.CommandName == "A")
+            {
+
+
+                int line = int.Parse(e.CommandArgument.ToString());
+                int id_fichatempo = int.Parse(GDVFichaTempo.Rows[line].Cells[0].Text);
+                string desc_operacao = string.Format(GDVFichaTempo.Rows[line].Cells[2].Text);
+                string obs = (string.Format(GDVFichaTempo.Rows[line].Cells[7].Text));
+                string situacao = string.Format(GDVFichaTempo.Rows[line].Cells[8].Text);
+                int ficha = int.Parse(GDVFichaTempo.Rows[line].Cells[1].Text);
+
+                lblFichaPausarCancelar.Text = ficha.ToString();
+                lblFichaFinalizarCancelar.Text = ficha.ToString();
+                lblFichaCancelar.Text = ficha.ToString();
+                lblIDPausarCancelar.Text = id_fichatempo.ToString();
+                lblIDFinalizarCancelar.Text = id_fichatempo.ToString();
+                lblIDCancelar.Text = id_fichatempo.ToString();
+                lblObsPausarCancelar.Text = obs.ToString().Replace("&nbsp;", "");
+                lblObsFinalizarCancelar.Text = obs.ToString().Replace("&nbsp;", "");
+                lblObeservacaoCancelar.Text = obs.ToString().Replace("&nbsp;", "");
+                lblOperacaoFinalizarCancelar.Text = desc_operacao.ToString();
+                lblOperacaoPausarCancelar.Text = desc_operacao.ToString();
+                lblOperacaoCancelar.Text = desc_operacao.ToString();
+                lblSituacaoFinalizarCancelar.Text = situacao.ToString();
+                lblSituacaoPausarCancelar.Text = situacao.ToString();
+                lblSituacaoCancelar.Text = situacao.ToString();
+
+                if (situacao == "INICIADO")
+                {
+                    DisplayModalPausarFinalizarCancelarProducao(this);
+                }
+                if (situacao == "PAUSADO")
+                {
+                    DisplayModalFinalizarIniciarCancelarProducao(this);
+                }
+                if (situacao == "FINALIZADO")
+                {
+                    DisplayModalCancelarProducao(this);
+                }
+                if (situacao == "CANCELADO")
+                {
+                    lblMsg.Text = "Documento cancelado não podem ser alterados!";
+                    DisplayModalMsgDefault(this);
+                }
+
+            }
 
         }
 
@@ -93,7 +147,7 @@ namespace ProjCronoAnalise
                                                true);
         }
 
-        //Confirmar cadastro
+        //Confirmar cria/inicializa produção
         protected void btnConfirmIniciarProducao_Click(object sender, EventArgs e)
         {
             string desc_operacao = TxtOperacao.Text;
@@ -113,9 +167,262 @@ namespace ProjCronoAnalise
 
             catch
             {
-
+                lblMsg.Text = "Erro!";
+                DisplayModalMsgDefault(this);
             }
 
+        }
+
+        //Confirmar pausa produção iniciada
+        protected void btnConfirmPausaProducao_Click(object sender, EventArgs e)
+        {
+            int id_fichatempo = int.Parse(lblIDPausarCancelar.Text);
+            string observacao = string.Format(lblObsPausarCancelar.Text);
+
+            try
+            {
+                MySqlConnection conn = new MySqlConnection(MyConString);
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(" update fichatempo " +
+                                                    " set stop_tempo = now(), " +
+                                                    " tempo_gasto = tempo_gasto + TIMESTAMPDIFF(MINUTE, start_tempo, now()), " +
+                                                    " quantidade = null, " +
+                                                    " desconto = null, " +
+                                                    " obs = '"+ observacao + "', " +
+                                                    " situacao = 'PAUSADO' " +
+                                                    " where recnum = " +
+                                                    id_fichatempo , conn);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                LoadTable();
+            }
+
+            catch
+            {
+                lblMsg.Text = "Erro!";
+                DisplayModalMsgDefault(this);
+            }
+
+        }
+
+        //Confirmar finaliza produção iniciada
+        protected void btnConfirmFinalizarProducaoX_Click(object sender, EventArgs e)
+        {
+            int id_fichatempo = int.Parse(lblIDPausarCancelar.Text);
+            string observacao = string.Format(lblObsPausarCancelar.Text);
+            string desconto = string.Format(lblDescontoPausarCancelar.Text);
+
+            try
+            {
+                MySqlConnection conn = new MySqlConnection(MyConString);
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(" update fichatempo " +
+                                                    " set stop_tempo = now(), " +
+                                                    " tempo_gasto = tempo_gasto + TIMESTAMPDIFF(MINUTE, start_tempo, now()), " +
+                                                    " quantidade = 2, " +
+                                                    " desconto = '0', " +
+                                                    " obs = '" + observacao + "', " +
+                                                    " desconto = '" + desconto + "', " +
+                                                    " situacao = 'FINALIZADO' " +
+                                                    " where recnum = " +
+                                                    id_fichatempo, conn);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                LoadTable();
+            }
+
+            catch
+            {
+                lblMsg.Text = "Erro!";
+                DisplayModalMsgDefault(this);
+            }
+
+        }
+
+        //Confirmar cancela produção iniciada
+        protected void btnConfirmCancelarProducao_Click(object sender, EventArgs e)
+        {
+            int id_fichatempo = int.Parse(lblIDPausarCancelar.Text);
+            string observacao = string.Format(lblObsPausarCancelar.Text);
+
+            try
+            {
+                MySqlConnection conn = new MySqlConnection(MyConString);
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(" update fichatempo " +                                                    
+                                                    " set situacao = 'CANCELADO', " +
+                                                    " obs = '" + observacao + "' " +
+                                                    " where recnum = " +
+                                                    id_fichatempo, conn);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                LoadTable();
+            }
+
+            catch
+            {
+                lblMsg.Text = "Erro!";
+                DisplayModalMsgDefault(this);
+            }
+
+        }
+
+        //Confirmar finaliza produção pausada
+        protected void btnConfirmFinalizarProducao_Click(object sender, EventArgs e)
+        {
+            int id_fichatempo = int.Parse(lblIDPausarCancelar.Text);
+            string observacao = string.Format(lblObsFinalizarCancelar.Text);
+            string desconto = string.Format(lblDescontoFinalizarCancelar.Text);
+
+            try
+            {
+                MySqlConnection conn = new MySqlConnection(MyConString);
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(" update fichatempo " +
+                                                    " set stop_tempo = now(), " +
+                                                    " tempo_gasto = tempo_gasto + TIMESTAMPDIFF(MINUTE, start_tempo, now()), " +
+                                                    " quantidade = 2, " +
+                                                    " desconto = '0', " +
+                                                    " obs = '" + observacao + "', " +
+                                                    " desconto = '" + desconto + "', " +
+                                                    " situacao = 'FINALIZADO' " +
+                                                    " where recnum = " +
+                                                    id_fichatempo, conn);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                LoadTable();
+            }
+
+            catch
+            {
+                lblMsg.Text = "Erro!";
+                DisplayModalMsgDefault(this);
+            }
+
+        }
+
+        //Confirmar reinicia produção pausada
+        protected void btnConfirmReiniciarProducao_Click(object sender, EventArgs e)
+        {
+            int id_fichatempo = int.Parse(lblIDPausarCancelar.Text);
+            string observacao = string.Format(lblObsFinalizarCancelar.Text);
+
+            try
+            {
+                MySqlConnection conn = new MySqlConnection(MyConString);
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(" update fichatempo " +
+                                                    " set start_tempo = now(), " +
+                                                    " stop_tempo = null, " +
+                                                    " quantidade = null, " +
+                                                    " desconto = null, " +
+                                                    " obs = '" + observacao + "', " +
+                                                    " situacao = 'INICIADO' " +
+                                                    " where recnum = " +
+                                                    id_fichatempo, conn);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                LoadTable();
+            }
+
+            catch
+            {
+                lblMsg.Text = "Erro!";
+                DisplayModalMsgDefault(this);
+            }
+
+        }
+
+        //Confirmar cancela produção iniciada
+        protected void btnConfirmCancelarProducao2_Click(object sender, EventArgs e)
+        {
+            int id_fichatempo = int.Parse(lblIDPausarCancelar.Text);
+            string observacao = string.Format(lblObsFinalizarCancelar.Text);
+
+            try
+            {
+                MySqlConnection conn = new MySqlConnection(MyConString);
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(" update fichatempo " +
+                                                    " set situacao = 'CANCELADO', " +
+                                                    " obs = '" + observacao + "' " +
+                                                    " where recnum = " +
+                                                    id_fichatempo, conn);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                LoadTable();
+            }
+
+            catch
+            {
+                lblMsg.Text = "Erro!";
+                DisplayModalMsgDefault(this);
+            }
+
+        }
+
+        //Confirmar cancela produção finalizada
+        protected void btnConfirmCancelarProducao3_Click(object sender, EventArgs e)
+        {
+            int id_fichatempo = int.Parse(lblIDPausarCancelar.Text);
+            string observacao = string.Format(lblObsFinalizarCancelar.Text);
+
+            try
+            {
+                MySqlConnection conn = new MySqlConnection(MyConString);
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(" update fichatempo " +
+                                                    " set situacao = 'CANCELADO', " +
+                                                    " obs = '" + observacao + "' " +
+                                                    " where recnum = " +
+                                                    id_fichatempo, conn);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                LoadTable();
+            }
+
+            catch
+            {
+                lblMsg.Text = "Erro!";
+                DisplayModalMsgDefault(this);
+            }
+
+        }
+
+        // Exibe modal para pausar/cancelar produção
+        private void DisplayModalPausarFinalizarCancelarProducao(Page page)
+        {
+            ClientScript.RegisterStartupScript(typeof(Page),
+                                               Guid.NewGuid().ToString(),
+                                               "MostrarModalPausarFinalizarCancelarProducao();",
+                                               true);
+        }
+
+        // Exibe modal para finalizar/cancelar produção
+        private void DisplayModalFinalizarIniciarCancelarProducao(Page page)
+        {
+            ClientScript.RegisterStartupScript(typeof(Page),
+                                               Guid.NewGuid().ToString(),
+                                               "MostrarModalFinalizarIniciarCancelarProducao();",
+                                               true);
+        }
+
+        // Exibe modal para cancelar produção finalizada
+        private void DisplayModalCancelarProducao(Page page)
+        {
+            ClientScript.RegisterStartupScript(typeof(Page),
+                                               Guid.NewGuid().ToString(),
+                                               "MostrarModalCancelarProducao();",
+                                               true);
+        }
+
+        //Mostar modal de Msg Erro
+        private void DisplayModalMsgDefault(Page page)
+        {
+            ClientScript.RegisterStartupScript(typeof(Page),
+                                               Guid.NewGuid().ToString(),
+                                               "MostrarModalMsgDefault();",
+                                               true);
         }
     }
 }

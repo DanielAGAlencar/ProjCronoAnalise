@@ -1,8 +1,9 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Principal.Master" AutoEventWireup="true" CodeBehind="CadastroTempoPadraoProducao.aspx.cs" Inherits="ProjCronoAnalise.CadastroTempoPadraoProducao" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">    
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server"> >
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    >
     <hr />
     <div class="row" runat="server" width="1200px">
         &nbsp;<div class="col-sm">
@@ -41,7 +42,7 @@
             <asp:BoundField DataField="desc_operacao" HeaderText="Operação" />
             <asp:BoundField DataField="tempo" HeaderText="Tempo Padrão">
                 <HeaderStyle Width="70px" />
-            </asp:BoundField>            
+            </asp:BoundField>
             <asp:ButtonField ButtonType="Image" Visible="true" CommandName="A" ImageUrl="~/img/DocumentEdit_40924.png" Text="Alterar" />
         </Columns>
         <EditRowStyle BackColor="#2461BF" />
@@ -57,8 +58,8 @@
     </asp:GridView>
     <div>
 
-         <%----------------------------Modal Escolha de Ação------------------------------%>
-                <div class="modal fade" id="modalTempoPadraoEscolhaAcao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <%----------------------------Modal Escolha de Ação------------------------------%>
+        <div class="modal fade" id="modalTempoPadraoEscolhaAcao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -68,10 +69,10 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <asp:Label ID="lblMensagemAcao" runat="server">O que deseja fazer?</asp:Label>                  
+                        <asp:Label ID="lblMensagemAcao" runat="server">O que deseja fazer?</asp:Label>
                     </div>
-                    <div class="modal-footer">                        
-                         <asp:Button ID="bntNovoCadastroTempo" CssClass="btn btn-primary" runat="server" Text="Novo Cadastro" Width="130px" OnClick="btnNovoCadastroTempo_Click" />
+                    <div class="modal-footer">
+                        <asp:Button ID="bntNovoCadastroTempo" CssClass="btn btn-primary" runat="server" Text="Novo Cadastro" Width="130px" OnClick="btnNovoCadastroTempo_Click" />
                         <asp:Button ID="bntAlterarDeletar" CssClass="btn btn-secondary" runat="server" Text="Alterar" Width="130px" OnClick="btnAlterarDeletar_Click" />
                         <asp:Button ID="bntCancelarAcao" CssClass="btn btn-danger" runat="server" Text="Cancelar" Width="130px" />
                     </div>
@@ -100,13 +101,13 @@
 			            </script>
                         <br />
                         <asp:Label ID="LabelVariacaoCadastro" runat="server">ID Variação: </asp:Label>
-                        <asp:Label ID="lblIDVariacao" runat="server"></asp:Label> 
-                        <br />                        
+                        <asp:Label ID="lblIDVariacao" runat="server"></asp:Label>
+                        <br />
                         <asp:Label ID="LabelOperacaoCadastro" runat="server">Operação: </asp:Label>
-                        <asp:DropDownList ID="TxtOperacao" runat="server" Width="200px" ></asp:DropDownList>
-                        
+                        <asp:DropDownList ID="TxtOperacao" runat="server" Width="200px"></asp:DropDownList>
+
                     </div>
-                    <div class="modal-footer">                         
+                    <div class="modal-footer">
                         <asp:Button ID="btnConfirm" CssClass="btn btn-primary" runat="server" Text="Confirmar" Width="130px" OnClick="btnConfirm_Click" />
                         <asp:Button ID="bntCancelar" CssClass="btn btn-danger" runat="server" Text="Cancelar" Width="130px" />
                     </div>
@@ -138,13 +139,13 @@
                         <asp:Label ID="lblIDTempo" runat="server"></asp:Label>
                         <br />
                         <asp:Label ID="LabelIDVariacaoAlterarCancelar" runat="server">ID Variação: </asp:Label>
-                        <asp:Label ID="lblIDVariacaoAlterarDeletar" runat="server"></asp:Label> 
-                        <br />                        
+                        <asp:Label ID="lblIDVariacaoAlterarDeletar" runat="server"></asp:Label>
+                        <br />
                         <asp:Label ID="LabelOperacaoAlterarCancelar" runat="server">Operação: </asp:Label>
                         <asp:Label ID="lblOperacaoAlterarDeletar" runat="server"></asp:Label>
-                        
+
                     </div>
-                    <div class="modal-footer">                   
+                    <div class="modal-footer">
                         <asp:Button ID="bntAlterar" CssClass="btn btn-primary" runat="server" Text="Alterar" Width="130px" OnClick="btnAlterar_Click" />
                         <asp:Button ID="bntDeletar" CssClass="btn btn-warning" runat="server" Text="Deletar" Width="130px" OnClick="btnDeletar_Click" />
                         <asp:Button ID="bntCancelarAlterarDeletar" CssClass="btn btn-danger" runat="server" Text="Cancelar" Width="130px" />
@@ -155,22 +156,22 @@
 
         <%----------------------------Modal Mensagem--------------------------------%>
         <div class="modal fade" id="modalMsg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabelMsg">Messagem!</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <asp:Label ID="lblMsg" runat="server" Text="Label"></asp:Label>
-                            </div>
-                            <div class="modal-footer">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabelMsg">Messagem!</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <asp:Label ID="lblMsg" runat="server" Text="Label"></asp:Label>
+                    </div>
+                    <div class="modal-footer">
                         <asp:Button ID="bntOk" CssClass="btn btn-primary" runat="server" Text="Ok" Width="130px" />
                     </div>
-                        </div>
-                    </div>
                 </div>
+            </div>
+        </div>
     </div>
 </asp:Content>

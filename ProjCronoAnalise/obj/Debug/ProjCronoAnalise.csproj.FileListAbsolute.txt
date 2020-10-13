@@ -83,3 +83,4 @@ C:\Users\DANIEL2-GVM\source\repos\ProjCronoAnalise\ProjCronoAnalise\obj\Debug\Pr
 C:\Users\DANIEL2-GVM\source\repos\ProjCronoAnalise\ProjCronoAnalise\obj\Debug\ProjCronoAnalise.csproj.CopyComplete
 C:\Users\DANIEL2-GVM\source\repos\ProjCronoAnalise\ProjCronoAnalise\obj\Debug\ProjCronoAnalise.dll
 C:\Users\DANIEL2-GVM\source\repos\ProjCronoAnalise\ProjCronoAnalise\obj\Debug\ProjCronoAnalise.pdb
+C:\Users\DANIEL2-GVM\source\repos\ProjCronoAnalise\ProjCronoAnalise\obj\Debug\ProjCronoAnalise.csprojAssemblyReference.cache

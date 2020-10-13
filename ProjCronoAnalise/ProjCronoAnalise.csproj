@@ -127,7 +127,6 @@
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="Default.aspx" />
-    <Content Include="FinalizarProducao.aspx" />
     <Content Include="img\cancela.png" />
     <Content Include="img\Copy-of-Imagens-para-o-Restaurantes-de-Sucesso-20.png" />
     <Content Include="img\delete.png" />
@@ -135,7 +134,6 @@
     <Content Include="img\DocumentEdit_40924.png" />
     <Content Include="img\entrega.jpg" />
     <Content Include="img\plus.png" />
-    <Content Include="IniciarProducao.aspx" />
     <Content Include="js\bootstrap.bundle.js" />
     <Content Include="js\bootstrap.bundle.min.js" />
     <Content Include="js\bootstrap.js" />
@@ -168,20 +166,6 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="FinalizarProducao.aspx.cs">
-      <DependentUpon>FinalizarProducao.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="FinalizarProducao.aspx.designer.cs">
-      <DependentUpon>FinalizarProducao.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="IniciarProducao.aspx.cs">
-      <DependentUpon>IniciarProducao.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="IniciarProducao.aspx.designer.cs">
-      <DependentUpon>IniciarProducao.aspx</DependentUpon>
     </Compile>
     <Compile Include="Principal.Master.cs">
       <DependentUpon>Principal.Master</DependentUpon>

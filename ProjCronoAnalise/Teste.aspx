@@ -15,6 +15,9 @@
 <body>   
     <form id="form1" runat="server">
         <div>
+
+            <asp:TextBox ID="TextBox1" runat="server" TextMode="multiline" Height="53px" Width="365px">bariu</asp:TextBox>
+            <br />
             <textarea id="TextArea1" cols="40" rows="2">blauuu</textarea>
             <br />
             <asp:TextBox ID="desconto" runat="server" Width="100px">000</asp:TextBox>
@@ -29,8 +32,7 @@
             <br />
             <div class="dropdown">
               <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown button
-              </button>
+                Dropdown button</button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 
               </div>
