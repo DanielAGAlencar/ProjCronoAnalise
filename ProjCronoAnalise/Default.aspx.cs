@@ -161,6 +161,13 @@ namespace ProjCronoAnalise
                                                       "(fkficha, fkoperacao, data_criacao, start_tempo, stop_tempo, tempo_gasto, quantidade, desconto, obs, situacao) " +
                                                       "values(" + ficha + " , (select recnum from producaooperacao where descricao = '" + desc_operacao + "') " + ", now(), now(), null, '0', null, null, null, 'INICIADO');", connft);
                 cmdft.ExecuteNonQuery();
+
+                MySqlCommand cmdftlog = new MySqlCommand("insert into log_fichatempo" +
+                                                      "(fkfichatempo, data_registro, situacao) " +
+                                                      "(select recnum, data_criacao, situacao from fichatempo order by recnum desc limit 1);", connft);
+
+                cmdftlog.ExecuteNonQuery();
+
                 connft.Close();
                 LoadTable();
             }
@@ -193,6 +200,13 @@ namespace ProjCronoAnalise
                                                     " where recnum = " +
                                                     id_fichatempo , conn);
                 cmd.ExecuteNonQuery();
+
+                MySqlCommand cmdftlog = new MySqlCommand("insert into log_fichatempo" +
+                                                      "(fkfichatempo, data_registro, situacao) " +
+                                                      "(select recnum, stop_tempo, situacao from fichatempo where recnum = " + id_fichatempo + ");", conn);
+
+                cmdftlog.ExecuteNonQuery();
+
                 conn.Close();
                 LoadTable();
             }
@@ -219,7 +233,7 @@ namespace ProjCronoAnalise
                 MySqlCommand cmd = new MySqlCommand(" update fichatempo " +
                                                     " set stop_tempo = now(), " +
                                                     " tempo_gasto = tempo_gasto + TIMESTAMPDIFF(MINUTE, start_tempo, now()), " +
-                                                    " quantidade = 2, " +
+                                                    " quantidade = (select quantidade from fichaproducao where recnum =  fichatempo.fkficha ), " +
                                                     " desconto = '0', " +
                                                     " obs = '" + observacao + "', " +
                                                     " desconto = '" + desconto + "', " +
@@ -227,6 +241,13 @@ namespace ProjCronoAnalise
                                                     " where recnum = " +
                                                     id_fichatempo, conn);
                 cmd.ExecuteNonQuery();
+
+                MySqlCommand cmdftlog = new MySqlCommand("insert into log_fichatempo" +
+                                                      "(fkfichatempo, data_registro, situacao) " +
+                                                      "(select recnum, stop_tempo, situacao from fichatempo where recnum = " + id_fichatempo + ");", conn);
+
+                cmdftlog.ExecuteNonQuery();
+
                 conn.Close();
                 LoadTable();
             }
@@ -255,6 +276,13 @@ namespace ProjCronoAnalise
                                                     " where recnum = " +
                                                     id_fichatempo, conn);
                 cmd.ExecuteNonQuery();
+
+                MySqlCommand cmdftlog = new MySqlCommand("insert into log_fichatempo" +
+                                                      "(fkfichatempo, data_registro, situacao) " +
+                                                      "(select recnum, stop_tempo, situacao from fichatempo where recnum = " + id_fichatempo + ");", conn);
+
+                cmdftlog.ExecuteNonQuery();
+
                 conn.Close();
                 LoadTable();
             }
@@ -281,7 +309,7 @@ namespace ProjCronoAnalise
                 MySqlCommand cmd = new MySqlCommand(" update fichatempo " +
                                                     " set stop_tempo = now(), " +
                                                     " tempo_gasto = tempo_gasto + TIMESTAMPDIFF(MINUTE, start_tempo, now()), " +
-                                                    " quantidade = 2, " +
+                                                    " quantidade = (select quantidade from fichaproducao where recnum =  fichatempo.fkficha ), " +
                                                     " desconto = '0', " +
                                                     " obs = '" + observacao + "', " +
                                                     " desconto = '" + desconto + "', " +
@@ -289,6 +317,13 @@ namespace ProjCronoAnalise
                                                     " where recnum = " +
                                                     id_fichatempo, conn);
                 cmd.ExecuteNonQuery();
+
+                MySqlCommand cmdftlog = new MySqlCommand("insert into log_fichatempo" +
+                                                      "(fkfichatempo, data_registro, situacao) " +
+                                                      "(select recnum, stop_tempo, situacao from fichatempo where recnum = " + id_fichatempo + ");", conn);
+
+                cmdftlog.ExecuteNonQuery();
+
                 conn.Close();
                 LoadTable();
             }
@@ -321,6 +356,13 @@ namespace ProjCronoAnalise
                                                     " where recnum = " +
                                                     id_fichatempo, conn);
                 cmd.ExecuteNonQuery();
+
+                MySqlCommand cmdftlog = new MySqlCommand("insert into log_fichatempo" +
+                                                      "(fkfichatempo, data_registro, situacao) " +
+                                                      "(select recnum, start_tempo, situacao from fichatempo where recnum = " + id_fichatempo + ");", conn);
+
+                cmdftlog.ExecuteNonQuery();
+
                 conn.Close();
                 LoadTable();
             }
@@ -349,6 +391,13 @@ namespace ProjCronoAnalise
                                                     " where recnum = " +
                                                     id_fichatempo, conn);
                 cmd.ExecuteNonQuery();
+
+                MySqlCommand cmdftlog = new MySqlCommand("insert into log_fichatempo" +
+                                                      "(fkfichatempo, data_registro, situacao) " +
+                                                      "(select recnum, now(), situacao from fichatempo where recnum = " + id_fichatempo + ");", conn);
+
+                cmdftlog.ExecuteNonQuery();
+
                 conn.Close();
                 LoadTable();
             }
@@ -377,6 +426,13 @@ namespace ProjCronoAnalise
                                                     " where recnum = " +
                                                     id_fichatempo, conn);
                 cmd.ExecuteNonQuery();
+
+                MySqlCommand cmdftlog = new MySqlCommand("insert into log_fichatempo" +
+                                                      "(fkfichatempo, data_registro, situacao) " +
+                                                      "(select recnum, now(), situacao from fichatempo where recnum = " + id_fichatempo + ");", conn);
+
+                cmdftlog.ExecuteNonQuery();
+
                 conn.Close();
                 LoadTable();
             }
